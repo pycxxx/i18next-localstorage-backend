@@ -10,7 +10,7 @@ Source can be loaded via [npm](https://www.npmjs.com/package/i18next-localstorag
 
 ```
 # npm package
-$ npm install i18next-localstorage-backend
+$ npm install @pycxxx/i18next-localstorage-backend
 ```
 
 Wiring up with the chained backend:
@@ -42,7 +42,7 @@ i18next
 ## Cache Backend Options
 
 
-```js
+```ts
 {
   // prefix for stored languages
   prefix: 'i18next_res_',
@@ -55,6 +55,11 @@ i18next
 
   // language versions
   versions: {},
+
+  // If this option has been set then `versions` and `defaultVersion` will be ignored. Default: undefined
+  getVersion: async (language?: string): Promise<string> => {
+    return ''
+  },
 
   // can be localStorage, sessionStorage, asyncStorage or localForage. Default: localStorage
   store: typeof window !== 'undefined' ? window.localStorage : null

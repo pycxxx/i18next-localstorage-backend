@@ -32,6 +32,7 @@ function getDefaults () {
     expirationTime: 7 * 24 * 60 * 60 * 1000,
     defaultVersion: undefined,
     versions: {},
+    getVersion: undefined,
     store: typeof window !== 'undefined' ? window.localStorage : null
   }
 }
@@ -94,7 +95,10 @@ class Cache {
     }
   }
 
-  getVersion (language) {
+  async getVersion (language) {
+    if (this.options.getVersion) {
+      return this.options.getVersion(language)
+    }
     return this.options.versions[language] || this.options.defaultVersion
   }
 }

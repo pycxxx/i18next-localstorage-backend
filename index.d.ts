@@ -5,6 +5,7 @@ interface BackendOptions {
   expirationTime?: number;
   versions?: { [key: string]: string };
   defaultVersion?: string;
+  getVersion?: (language?: string) => Promise<string>
   store?: any;
 }
 
