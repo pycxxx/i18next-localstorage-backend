@@ -57,7 +57,7 @@ i18next
   versions: {},
 
   // If this option has been set then `versions` and `defaultVersion` will be ignored. Default: undefined
-  getVersion: async (language?: string, namespace?: string): Promise<string> => {
+  getVersion: async (language: string, namespace: string): Promise<string> => {
     return ''
   },
 
