@@ -4,17 +4,17 @@ class Storage {
     this.store = options.store
   }
 
-  setItem (key, value) {
+  async setItem (key, value) {
     if (this.store) {
       try {
-        this.store.setItem(key, value)
+        await this.store.setItem(key, value)
       } catch (e) {
         // f.log('failed to set value for key "' + key + '" to localStorage.');
       }
     }
   }
 
-  getItem (key, value) {
+  async getItem (key, value) {
     if (this.store) {
       try {
         return this.store.getItem(key, value)
@@ -50,31 +50,33 @@ class Cache {
   }
 
   read (language, namespace, callback) {
-    const nowMS = new Date().getTime()
+    (async () => {
+      const nowMS = new Date().getTime()
 
-    if (!this.storage.store) {
-      return callback(null, null)
-    }
-
-    let local = this.storage.getItem(`${this.options.prefix}${language}-${namespace}`)
-
-    if (local) {
-      local = JSON.parse(local)
-      const version = this.getVersion(language)
-      if (
-        // expiration field is mandatory, and should not be expired
-        local.i18nStamp && local.i18nStamp + this.options.expirationTime > nowMS &&
-
-        // there should be no language version set, or if it is, it should match the one in translation
-        version === local.i18nVersion
-      ) {
-        delete local.i18nVersion
-        delete local.i18nStamp
-        return callback(null, local)
+      if (!this.storage.store) {
+        return callback(null, null)
       }
-    }
 
-    return callback(null, null)
+      let local = await this.storage.getItem(`${this.options.prefix}${language}-${namespace}`)
+
+      if (local) {
+        local = JSON.parse(local)
+        const version = this.getVersion(language)
+        if (
+          // expiration field is mandatory, and should not be expired
+          local.i18nStamp && local.i18nStamp + this.options.expirationTime > nowMS &&
+
+          // there should be no language version set, or if it is, it should match the one in translation
+          version === local.i18nVersion
+        ) {
+          delete local.i18nVersion
+          delete local.i18nStamp
+          return callback(null, local)
+        }
+      }
+
+      return callback(null, null)
+    })().catch(err => callback(err, null))
   }
 
   save (language, namespace, data) {

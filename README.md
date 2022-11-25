@@ -1,6 +1,6 @@
 # Introduction
 
-This is a i18next cache layer to be used in the browser. It will load and cache resources from localStorage and can be used in combination with the [chained backend](https://github.com/i18next/i18next-chained-backend).
+A fork of [i18next-localstorage-backend](https://github.com/i18next/i18next-localstorage-backend) but with support of asyncStorage and localForage.
 
 # Getting started
 
@@ -56,7 +56,7 @@ i18next
   // language versions
   versions: {},
 
-  // can be either window.localStorage or window.sessionStorage. Default: window.localStorage
+  // can be localStorage, sessionStorage, asyncStorage or localForage. Default: localStorage
   store: typeof window !== 'undefined' ? window.localStorage : null
 };
 ```

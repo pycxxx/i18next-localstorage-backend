@@ -1,7 +1,7 @@
 {
-  "name": "i18next-localstorage-backend",
+  "name": "@pycxxx/i18next-localstorage-backend",
   "version": "4.0.0",
-  "description": "caching layer backend for i18next using browsers localStorage",
+  "description": "caching layer backend for i18next using browsers localStorage (also support asyncStorage and localForage)",
   "main": "./dist/cjs/i18nextLocalStorageBackend.js",
   "module": "./dist/esm/i18nextLocalStorageBackend.js",
   "types": "./index.d.ts",
