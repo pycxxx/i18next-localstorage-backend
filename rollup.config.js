@@ -1,7 +1,8 @@
-import babel from 'rollup-plugin-babel';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import { terser } from 'rollup-plugin-terser';
-import pkg from './package.json';
+import babel from 'rollup-plugin-babel'
+import nodeResolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
+import { terser } from 'rollup-plugin-terser'
+import pkg from './package.json'
 
 const getBabelOptions = ({ useESModules }) => ({
   exclude: /node_modules/,
@@ -9,12 +10,12 @@ const getBabelOptions = ({ useESModules }) => ({
   plugins: [
     ['@babel/transform-runtime', { useESModules }]
   ]
-});
+})
 
-const input = './src/index.js';
+const input = './src/index.js'
 const name = 'i18nextLocalStorageBackend'
 // check relative and absolute paths for windows and unix
-const external = id => !id.startsWith('.') && !id.startsWith('/') && !id.includes(':');
+const external = id => !id.startsWith('.') && !id.startsWith('/') && !id.includes(':')
 
 export default [
   {
@@ -22,6 +23,7 @@ export default [
     output: { format: 'cjs', file: pkg.main },
     external,
     plugins: [
+      commonjs(),
       babel(getBabelOptions({ useESModules: false }))
     ]
   },
@@ -31,6 +33,7 @@ export default [
     output: { format: 'esm', file: pkg.module },
     external,
     plugins: [
+      commonjs(),
       babel(getBabelOptions({ useESModules: true }))
     ]
   },
@@ -39,17 +42,19 @@ export default [
     input,
     output: { format: 'umd', name, file: `dist/umd/${name}.js` },
     plugins: [
+      commonjs(),
       babel(getBabelOptions({ useESModules: true })),
       nodeResolve()
-    ],
+    ]
   },
   {
     input,
     output: { format: 'umd', name, file: `dist/umd/${name}.min.js` },
     plugins: [
+      commonjs(),
       babel(getBabelOptions({ useESModules: true })),
       nodeResolve(),
       terser()
-    ],
+    ]
   }
 ]
