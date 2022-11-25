@@ -10,7 +10,7 @@ Source can be loaded via [npm](https://www.npmjs.com/package/i18next-localstorag
 
 ```
 # npm package
-$ npm install @pycxxx/i18next-localstorage-backend
+$ npm install extended-i18next-localstorage-backend
 ```
 
 Wiring up with the chained backend:

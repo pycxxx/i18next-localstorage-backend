@@ -1,5 +1,5 @@
 {
-  "name": "@pycxxx/i18next-localstorage-backend",
+  "name": "extended-i18next-localstorage-backend",
   "version": "4.0.0",
   "description": "caching layer backend for i18next using browsers localStorage (also support asyncStorage and localForage)",
   "main": "./dist/cjs/i18nextLocalStorageBackend.js",
