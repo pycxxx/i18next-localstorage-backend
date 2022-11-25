@@ -62,17 +62,13 @@ class Cache {
 
       if (local) {
         local = JSON.parse(local)
-        const version = this.getVersion(language, namespace)
-        if (
-          // expiration field is mandatory, and should not be expired
-          local.i18nStamp && local.i18nStamp + this.options.expirationTime > nowMS &&
-
-          // there should be no language version set, or if it is, it should match the one in translation
-          version === local.i18nVersion
-        ) {
-          delete local.i18nVersion
-          delete local.i18nStamp
-          return callback(null, local)
+        if (local.i18nStamp && local.i18nStamp + this.options.expirationTime > nowMS) {
+          const version = await this.getVersion(language, namespace)
+          if (version === local.i18nVersion) {
+            delete local.i18nVersion
+            delete local.i18nStamp
+            return callback(null, local)
+          }
         }
       }
 
